@@ -1,44 +1,28 @@
 /*---------------------------------------------------------------------------*/
-/* "main.cpp"                                                                */
+/* "utils.hpp"                                                               */
 /*                                                                           */
-/* HyPERION entry point.                                                     */
+/* Utility functions.                                                        */
 /*---------------------------------------------------------------------------*/
-
-#include <iostream>
-
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/
-
-#include <yaml-cpp/yaml.h>
-
+#ifndef HYPERION_UTILS_HPP
+#define HYPERION_UTILS_HPP
 /*---------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------*/
 
-#include "HyperionMainDriver.hpp"
+#include <vector>
 
 /*---------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------*/
 
-int main(int argc, char** argv)
+double inner_product_2D(std::pair<double, double> a,
+                        std::pair<double, double> b)
 {
-  if (argc < 1) {
-    std::cout << "Usage : h2p dataset.yaml\n";
-    return 1;
-  }
-
-  // Read the dataset file
-  std::string dataset_file(argv[1]);
-
-  YAML::Node dataset;
-  try {
-    dataset = YAML::LoadFile(dataset_file);
-  } catch (const YAML::Exception &e) {
-    throw std::runtime_error("Error: can't load file " + dataset_file);
-  }
-
-  HyperionMainDriver driver(dataset);
-  driver.load_mesh();
-  driver.run();
-
-  return 0;
+  double product = 0.0;
+  product += a.first * b.first;
+  product += a.second * b.second;
+  return product;
 }
+
+/*---------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------*/
+
+#endif //HYPERION_UTILS_HPP

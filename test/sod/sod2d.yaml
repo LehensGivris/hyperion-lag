@@ -1,0 +1,27 @@
+TimeManagement:
+  FinalTime: 0.2
+  TimeStep: 4.0E-05
+
+Mesh:
+  MeshFile: tube_100x5.msh
+
+InitialConditions:
+  - Name: AIR_LEFT
+    Pressure: 1.0
+    Density: 1.0
+  - Name: AIR_RIGHT
+    Pressure: 0.1
+    Density: 0.125
+
+ArtificialViscosity:
+  Coefficients: {Linear: 0.5, Quadratic: 0.6}
+
+BoundaryConditions:
+  - Position: Bottom
+    Value: {Y: 0.0}
+  - Position: Top
+    Value: {Y: 0.0}
+  - Position: Left
+    Value: {X: 0.0, Y: 0.0}
+  - Position: Right
+    Value: {X: 0.0, Y: 0.0}

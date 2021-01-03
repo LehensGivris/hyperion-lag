@@ -143,6 +143,15 @@ m_mesh->Allocate(nb_cells_to_allocate);
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // Write code here
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    
+    vtkIdType idt[] = {
+      static_cast<vtkIdType>(nodes[c*4+0]-1),
+      static_cast<vtkIdType>(nodes[c*4+1]-1),
+      static_cast<vtkIdType>(nodes[c*4+2]-1),
+      static_cast<vtkIdType>(nodes[c*4+3]-1)
+    };
+
+    m_mesh->InsertNextCell(VTK_QUAD, 4, idt);
   }
 
   gmsh::finalize();

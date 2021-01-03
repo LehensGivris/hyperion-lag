@@ -36,6 +36,15 @@ void add_cell_field(vtkSmartPointer<vtkUnstructuredGrid> mesh,
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   // TODO : write code here
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+  vtkSmartPointer<vtkDoubleArray> double_array = vtkSmartPointer<vtkDoubleArray>::New();
+  double_array->Allocate(field.size());
+  double_array->SetName(field_name.c_str());
+  for(auto f : field)
+  {
+    double_array->InsertNextValue(f);
+  }
+  mesh->GetFieldData()->AddArray(double_array);
 }
 
 //----------------------------------------------------------------------------
@@ -49,6 +58,14 @@ void add_node_field(vtkSmartPointer<vtkUnstructuredGrid> mesh,
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   // TODO : write code here
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  vtkSmartPointer<vtkDoubleArray> double_array = vtkSmartPointer<vtkDoubleArray>::New();
+  double_array->Allocate(field.size());
+  double_array->SetName(field_name.c_str());
+  for(auto f : field)
+  {
+    double_array->InsertNextValue(f);
+  }
+  mesh->GetFieldData()->AddArray(double_array);
 }
 
 //----------------------------------------------------------------------------
@@ -62,6 +79,14 @@ void add_vector_node_field(vtkSmartPointer<vtkUnstructuredGrid> mesh,
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   // TODO : write code here
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  vtkSmartPointer<vtkDoubleArray> double_array = vtkSmartPointer<vtkDoubleArray>::New();
+  double_array->Allocate(field.size()*2);
+  double_array->SetName(field_name.c_str());
+  for(auto f : field)
+  {
+    double_array->InsertNextTuple2(f.first, f.second);
+  }
+  mesh->GetFieldData()->AddArray(double_array);
 }
 
 /*---------------------------------------------------------------------------*/
@@ -94,6 +119,9 @@ void Hydro::init()
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // TODO : write code here
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+    m_mesh->GetPoint(n, coord);
+    m_vars->m_node_coord.push_back(std::make_pair(coord[0],coord[1]));
   }
 
   // Initialize cell volume

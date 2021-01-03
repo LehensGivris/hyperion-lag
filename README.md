@@ -1,4 +1,4 @@
-LehensGivris = Louis LE LANN (CISD) Univ Bordeaux
+LehensGivris = Louis LE LANN (llelann)(CISD) Univ Bordeaux
 
 # HyPERION-lag
 

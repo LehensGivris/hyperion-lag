@@ -25,3 +25,6 @@ In the test case directory, for example `test/sod`, run :
     /path/to/h2p sod2d.yaml
 
 VTK output files are produced in the current directory.
+
+## Résultat Obtenu
+![alt text](https://github.com/LehensGivris/hyperion-lag/blob/master/res_paraview.PNG?raw=true)

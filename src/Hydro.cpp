@@ -403,6 +403,11 @@ void Hydro::dump(int step, double simulation_time)
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   // TODO : write code here
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  vtkSmartPointer<vtkDoubleArray> t = vtkSmartPointer<vtkDoubleArray>::New();
+  t->SetName("Time");
+  t->SetNumberOfTuples(1);
+  t->InsertNextValue(simulation_time);
+  m_mesh->GetFieldData()->AddArray(t);
 
   add_cell_field(m_mesh, m_vars->m_pressure, "Pressure");
   add_cell_field(m_mesh, m_vars->m_artificial_viscosity, "ArtificialViscosity");

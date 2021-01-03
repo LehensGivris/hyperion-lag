@@ -115,6 +115,9 @@ void HyperionMainDriver::load_mesh()
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   // TODO : write code here
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  m_mesh = vtkSmartPointer<vtkUnstructuredGrid>::New();
+  m_mesh->SetPoints(vtk_points);
+
 
   int nb_cells_to_allocate = 0;
   {

@@ -80,6 +80,7 @@ void add_vector_node_field(vtkSmartPointer<vtkUnstructuredGrid> mesh,
   // TODO : write code here
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   vtkSmartPointer<vtkDoubleArray> double_array = vtkSmartPointer<vtkDoubleArray>::New();
+  double_array->SetNumberOfComponents(2);
   double_array->Allocate(field.size()*2);
   double_array->SetName(field_name.c_str());
   for(auto f : field)
@@ -420,6 +421,9 @@ void Hydro::dump(int step, double simulation_time)
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   // TODO : write code here
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  m_writer->SetFileName(file_name.c_str());
+  m_writer->SetInputData(m_mesh);
+  m_writer->Write();
 }
 
 /*---------------------------------------------------------------------------*/

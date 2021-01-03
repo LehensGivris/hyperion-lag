@@ -128,7 +128,7 @@ void HyperionMainDriver::load_mesh()
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   // TODO : write code here
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-m_mesh->Allocate(nb_cells_to_allocate);
+  m_mesh->Allocate(nb_cells_to_allocate);
 
   // Get global cells and nodes
   nodes.clear();

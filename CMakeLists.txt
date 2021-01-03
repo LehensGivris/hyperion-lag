@@ -15,6 +15,9 @@ list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/modules)
 # Find GMSH
 find_package(Gmsh)
 
+SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -g")
+SET(VTK_DIR "/home/louislelann/Download/VTK/VTK-9.0.1/build/lib/vtk" CACHE PATH "VTK directory override" FORCE)
+
 # Find VTK
 find_package(VTK COMPONENTS
   CommonCore
@@ -24,7 +27,7 @@ find_package(VTK COMPONENTS
   FiltersGeometry
   IOXML
   IOLegacy
-  REQUIRED)
+  REQUIRED NO_MODULE)
 
 # Fetch yaml-cpp
 include(${CMAKE_MODULE_PATH}/FetchYamlCpp.cmake)

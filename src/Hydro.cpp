@@ -341,6 +341,7 @@ void Hydro::move_nodes()
 
     mesh_points->SetPoint(n,new_pos);
   }
+  m_mesh->SetPoints(mesh_points);
 }
 
 /*---------------------------------------------------------------------------*/

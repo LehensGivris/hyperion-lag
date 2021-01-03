@@ -1,4 +1,6 @@
-LehensGivris = Louis LE LANN (CISD) Univ Bordeaux
+LehensGivris = Louis LE LANN (llelann) (CISD) Univ Bordeaux
+
+Entraide avec Rémi LASVENES (rlasvenes) (CISD) Univ Bordeaux (Code pouvant être similaire)
 
 # HyPERION-lag
 

@@ -100,6 +100,12 @@ void HyperionMainDriver::load_mesh()
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   // TODO : write code here
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  auto vtkPoints = vtkSmartPointer<vtkPoints>::New();
+  for(int n = 0; n < nodes.size(); ++n)
+  {
+    points->InsertPoint(nodes[n] - 1, coords[n*3+0], coords[n*3+1], coords[n*3+2]);
+  }
+
 
   // Insert points from Gmsh node coordinates
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

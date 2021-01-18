@@ -97,27 +97,17 @@ void HyperionMainDriver::load_mesh()
   std::cout << "[Driver::load_mesh] Initializing a VTK unstructured grid\n";
 
   // Create VTK points
-  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  // TODO : write code here
-  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  vtkSmartPointer<vtkPoints> vtk_points = vtkSmartPointer<vtkPoints>::New();
+  vtkNew<vtkPoints> points;
+  points->SetDataTypeToDouble();
 
   // Insert points from Gmsh node coordinates
-  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  // TODO : write code here
-  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  for(int n = 0; n < nodes.size(); ++n)
-  {
-    vtk_points->InsertPoint(nodes[n] - 1, coords[n*3+0], coords[n*3+1], coords[n*3+2]);
+  for (std::size_t n = 0; n < nodes.size(); ++n) {
+    points->InsertPoint(nodes[n] - 1, coords[n * 3], coords[n * 3 + 1], coords[n * 3 + 2]);
   }
 
   // Create a VTK unstructured grid
-  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  // TODO : write code here
-  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   m_mesh = vtkSmartPointer<vtkUnstructuredGrid>::New();
-  m_mesh->SetPoints(vtk_points);
-
+  m_mesh->SetPoints(points);
 
   int nb_cells_to_allocate = 0;
   {
@@ -128,9 +118,6 @@ void HyperionMainDriver::load_mesh()
   }
 
   // Allocate cells
-  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  // TODO : write code here
-  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   m_mesh->Allocate(nb_cells_to_allocate);
 
   // Get global cells and nodes
@@ -142,19 +129,11 @@ void HyperionMainDriver::load_mesh()
     m_msh_vtk_cells[cells[c]] = c;
     m_vtk_msh_cells[c] = cells[c];
 
-    // Insert connectivites, i.e. nodes connected to a cell
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    // Write code here
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    
-    vtkIdType idt[] = {
-      static_cast<vtkIdType>(nodes[c*4+0]-1),
-      static_cast<vtkIdType>(nodes[c*4+1]-1),
-      static_cast<vtkIdType>(nodes[c*4+2]-1),
-      static_cast<vtkIdType>(nodes[c*4+3]-1)
-    };
-
-    m_mesh->InsertNextCell(VTK_QUAD, 4, idt);
+    vtkNew<vtkIdList> cell_nodes;
+    for (int n = 0; n < 4; ++n) {
+      cell_nodes->InsertNextId(nodes[c * 4 + n] - 1);
+    }
+    m_mesh->InsertNextCell(VTK_QUAD, cell_nodes);
   }
 
   gmsh::finalize();
@@ -187,9 +166,8 @@ int HyperionMainDriver::run()
   while (simulation_time <= final_time + hydro->dt()) {
     auto loop_start_time = std::chrono::high_resolution_clock::now();
 
-    if (step % 500 == 0) {
-      hydro->dump(step, simulation_time);
-    }
+    bool last_iteration = (simulation_time == final_time + hydro->dt());
+    // TODO: if ANALYZE_INSITU, then call the appropriate method, else call dump
 
     hydro->compute_pressure_force();
     hydro->compute_artificial_viscosity();
@@ -207,6 +185,8 @@ int HyperionMainDriver::run()
     auto loop_end_time = std::chrono::high_resolution_clock::now();
     computation_time += loop_end_time - loop_start_time;
   }
+
+  hydro->finalize();
 
   std::cout << "[Driver::run] Computation time : "
             << std::chrono::duration_cast<std::chrono::seconds>(computation_time).count()

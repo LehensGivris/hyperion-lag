@@ -10,13 +10,18 @@ project(HyPERION
 # CMake modules
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/modules)
 
+# Enable In Situ analysis with ParaView Catalyst
+option(HYPERION_ENABLE_INSITU "Enable In Situ analysis with ParaView Catalyst" ON)
+
 ## System configuration checks #################################################
 
 # Find GMSH
 find_package(Gmsh)
 
-SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -g")
-SET(VTK_DIR "/home/louislelann/Download/VTK/VTK-9.0.1/build/lib/vtk" CACHE PATH "VTK directory override" FORCE)
+# Find ParaView for Catalyst
+if (HYPERION_ENABLE_INSITU)
+  find_package(ParaView 5.8 REQUIRED COMPONENTS Catalyst PythonCatalyst)
+endif()
 
 # Find VTK
 find_package(VTK COMPONENTS
@@ -27,7 +32,7 @@ find_package(VTK COMPONENTS
   FiltersGeometry
   IOXML
   IOLegacy
-  REQUIRED NO_MODULE)
+  REQUIRED)
 
 # Fetch yaml-cpp
 include(${CMAKE_MODULE_PATH}/FetchYamlCpp.cmake)

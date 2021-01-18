@@ -30,6 +30,8 @@ public:
 
 public:
   void init();
+  void finalize();
+
   void compute_volume();
   void compute_cqs(std::pair<double, double>* coord,
                    int cell_idx, int nb_nodes_of_cell);
@@ -41,11 +43,18 @@ public:
   void update_density();
   void apply_eos();
   void compute_dt();
+
   void dump(int step, double simulation_time);
+  void analyze_insitu(double simulation_time, int iteration, bool last_iteration);
 
 public:
   void set_dt(double dt) { m_dt = dt; }
   double dt() { return m_dt; }
+
+private:
+  void update_fields(double simulation_time);
+  void init_insitu();
+  void finalize_insitu();
 
 private:
   YAML::Node m_dataset;

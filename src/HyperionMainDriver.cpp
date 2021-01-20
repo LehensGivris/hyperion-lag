@@ -168,6 +168,13 @@ int HyperionMainDriver::run()
 
     bool last_iteration = (simulation_time == final_time + hydro->dt());
     // TODO: if ANALYZE_INSITU, then call the appropriate method, else call dump
+    if(ANALYZE_INSITU)
+    {
+      hydro->analyze_insitu(simulation_time, step, last_iteration;
+    }
+    else{
+      hydro->dump();
+    }
 
     hydro->compute_pressure_force();
     hydro->compute_artificial_viscosity();

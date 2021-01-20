@@ -28,3 +28,7 @@ VTK output files are produced in the current directory.
 
 For In Situ runs, a python script describing the analysis pipeline is required.
 As an example, `catalyst_insitu.py` has been created in `test/sod`.
+
+LehensGivris = Louis LE LANN (llelann) (CISD) Univ Bordeaux
+
+Entraide avec Rémi LASVENES (rlasvenes) (CISD) Univ Bordeaux (Code pouvant être similaire)
